@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Contacts</h1>
+    <ul id="contactsList"></ul>
+    <br>
+    <input type="text" id="nameInput" placeholder="Enter Name">
+    <button id="addButton">Add</button>
+    <button id="removeButton" disabled>Remove</button>
+    <script>
+        const contactsList = document.getElementById("contactsList");
+        const nameInput = document.getElementById("nameInput");
+        const addButton = document.getElementById("addButton");
+        const removeButton = document.getElementById("removeButton");
+
+        let contacts = [];
+
+        function updateList() {
+            contactsList.innerHTML = "";
+            for (const contact of contacts) {
+                const listItem = document.createElement("li");
+                listItem.textContent = contact;
+                contactsList.appendChild(listItem);
+            }
+            removeButton.disabled = contacts.length === 0;
+        }
+
+        addButton.addEventListener("click", function() {
+            const name = nameInput.value.trim();
+            if (name) {
+                if (contacts.length < 7) {
+                    contacts.push(name);
+                } else {
+                    contacts.shift();
+                    contacts.push(name);
+                }
+                nameInput.value = "";
+                updateList();
+            }
+        });
+
+        removeButton.addEventListener("click", function() {
+            contacts.pop();
+            updateList();
+        });
+
+        updateList();
+    </script>
+</body>
+</html>
